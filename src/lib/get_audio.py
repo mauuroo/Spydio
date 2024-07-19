@@ -12,6 +12,7 @@ def is_mute(browser_names=(
             process_name = session.Process.name().lower()
             if process_name in (name.lower() for name in browser_names):
                 volume = session._ctl.QueryInterface(ISimpleAudioVolume)
+                print(volume.GetMasterVolume())
                 if volume.GetMasterVolume() > 0:
                     return False
     return True 
