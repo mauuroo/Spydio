@@ -1,4 +1,3 @@
-import get_audio
-import spotify_credentials
-import spotify_api
-import gui
+from .get_audio import is_mute
+#from .gui import *
+from .spotify_config import *
