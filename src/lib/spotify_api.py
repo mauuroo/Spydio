@@ -41,7 +41,7 @@ class User:
             "album_picture": playback_info["item"]["album"]["images"][0]["url"]
         }
 
-    def start_playback(self, playlist_id=None):
+    def start_playback(self, playlist_id=None, step=6):
         """
         Plays a specific playlist if specified; otherwise, only Spotify is played.
 
@@ -53,11 +53,11 @@ class User:
             self.sp.start_playback(context_uri=f"spotify:playlist:{playlist_id}")
         else:
             self.sp.start_playback()
-        self.unmute()
+        self.unmute(step)
     
-    def pause_playback(self):
+    def pause_playback(self, step=-6):
+        self.mute(step)
         self.sp.pause_playback()
-        self.mute()
     
     def unmute(self, step):
         """
@@ -66,7 +66,7 @@ class User:
         Args:
             step (int): The step value to increase the volume. For example, 3 will increase the volume by 3 units at each step.
         """
-        for i in range(25, 75, step):
+        for i in range(55, 75, step):
             self.sp.volume(i)
 
     def mute(self, step):
