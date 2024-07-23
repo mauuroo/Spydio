@@ -8,19 +8,20 @@ def main():
 
     try:
         click_detector = lb.on_click_allowed.ClickDetector()
+        click_detector.select_monitor(0)
+
             
-        while True:
+        while True: 
             if lb.get_audio.is_mute():
                 if state:
                     last_key = lb.last_key_pressed.get_last_key()
                     if last_key not in ["left", "right"]:
-                        if click_detector.has_left_clicked():
-                            x, y = click_detector.left_click_coordinates
-                            if x <= 3840 and y <= 2160:
-                                user.start_playback()
+                        if  click_detector.has_left_clicked():
+                            if click_detector.approximate_pause_click_in_monitor():
+                                user.start_playback()  
                                 state = False
                         else:
-                            user.start_playback()
+                            user.start_playback()  
                             state = False
             else:
                 if not state:
@@ -33,5 +34,5 @@ def main():
     finally:
         click_detector.stop()
             
-if __name__ == "__main__":
+if __name__ == "__main__": 
     main()
