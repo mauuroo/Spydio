@@ -1,5 +1,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from platform import node
 
 
 class User:
@@ -41,7 +42,7 @@ class User:
             "album_picture": playback_info["item"]["album"]["images"][0]["url"]
         }
 
-    def start_playback(self, playlist_id=None, step=6):
+    def start_playback(self, playlist_id=None, step=9):
         """
         Plays a specific playlist if specified; otherwise, only Spotify is played.
 
@@ -49,13 +50,13 @@ class User:
             playlist_id(str): Playlist ID
         """
 
-        if playlist_id:
-            self.sp.start_playback(context_uri=f"spotify:playlist:{playlist_id}")
-        else:
-            self.sp.start_playback()
-        self.unmute(step)
+        try:
+            self.sp.start_playback(context_uri=f"spotify:playlist:{playlist_id}" if playlist_id else None)
+            self.unmute(step)
+        except:
+            self.force_playback()
     
-    def pause_playback(self, step=-6):
+    def pause_playback(self, step=-9):
         self.mute(step)
         self.sp.pause_playback()
     
@@ -66,7 +67,7 @@ class User:
         Args:
             step (int): The step value to increase the volume. For example, 3 will increase the volume by 3 units at each step.
         """
-        for i in range(55, 75, step):
+        for i in range(35, 45, step):
             self.sp.volume(i)
 
     def mute(self, step):
@@ -76,7 +77,7 @@ class User:
         Args:
             step (int): The negative step value to decrease the volume. For example, -3 will decrease the volume by 3 units at each step.
         """
-        for i in range(75, 0, step):
+        for i in range(45, 0, step):
             self.sp.volume(i)    
     
     def get_playlist(self):
@@ -99,3 +100,13 @@ class User:
                 "tracks": playlist["tracks"]["total"]
             })
         return playlist_info
+    
+    def force_playback(self):
+        """
+        Forces playback to start on the computer device.
+        """
+        computer_name = node()
+        devices = self.sp.devices()["devices"]
+        for device in devices:
+            if device["name"] == computer_name:
+                self.sp.transfer_playback(device_id=device["id"], force_play=True)
