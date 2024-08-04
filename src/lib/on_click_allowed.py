@@ -32,7 +32,6 @@ class ClickDetector:
         """
         if button == mouse.Button.left and pressed:
             self.left_click_coordinates = (x, y)
-            print(f"Left click detected at ({x}, {y})")
 
     def has_left_clicked(self):
         """
@@ -69,11 +68,11 @@ class ClickDetector:
                 'is_primary': screen == app.primaryScreen(),
             })
         QApplication.quit()
-        for monitor in monitors:
-            print(f"Monitor: {monitor}")
+        for i, monitor in enumerate(monitors):
+            print(f"{i+1})Monitor: {monitor}")
         return monitors
 
-    def select_monitor(self, index):
+    def select_monitor(self):
         """
         Selects a monitor based on its index in the list of monitors.
 
@@ -81,11 +80,17 @@ class ClickDetector:
             index (int): The index of the monitor to select.
         """
         monitors = self.get_info_monitors()
-        if 0 <= index < len(monitors):
-            self.selected_monitor = monitors[index]
-            print(f"Selected Monitor {index}: {self.selected_monitor}")
-        else:
-            print(f"Invalid monitor index: {index}")
+        flag = False
+
+        while not flag:
+            index = 0 if len(monitors) == 1 else int(input("Select a monitor: ")) - 1
+
+            if 0 <= index < len(monitors):
+                self.selected_monitor = monitors[index]
+                print(f"Selected Monitor {index}: {self.selected_monitor}")
+                flag = True
+            else:
+                print(f"Invalid monitor index: {index}")
 
     def is_click_in_selected_monitor(self):
         """

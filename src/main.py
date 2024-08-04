@@ -31,7 +31,7 @@ def main():
 
     try:
         click_detector = lb.on_click_allowed.ClickDetector()
-        click_detector.select_monitor(1)
+        click_detector.select_monitor()
 
         while True: 
             if lb.get_audio.is_mute():
