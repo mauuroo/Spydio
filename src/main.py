@@ -16,13 +16,21 @@ def is_spotify_running():
             return True
         elif proc.info["name"] == "Spotify":  # For macOS and Linux
             return True
-    return False    
+    return False
+
+def play_mode(user, mode, min_v, volumen):
+    if mode == 1:
+        user.start_playback(limit=int(min_v*volumen), volumen=volumen)
+    else:
+        user.increase(limit=int(min_v * volumen), volumen=volumen) 
+    return False
 
 
 
 def main():
     user = lb.User(client_id=lb.CLIENT_ID, client_secret=lb.CLIENT_SECRET, redirect_uri=lb.REDIRECT_URI, scope=lb.SCOPE)
     state = True
+    min_v = 0.435
 
     #Makes sure to have spotify open for the correct execution of the program
     if not is_spotify_running():
@@ -33,35 +41,33 @@ def main():
                      "1) Reproducir / Pausar \n"
                      "2) Disminución del volumen \n"))
     
+    volumen = int(input("Ingrese Nivel de Volumen [0 - 100]: "))
+    
     try:
         click_detector = lb.on_click_allowed.ClickDetector()
         click_detector.select_monitor()
-        volumen = int(input("Ingrese Nivel de Volumen [0 - 100]: "))
-        user.start_playback(limit=0, volumen=0)
+        user.start_playback() 
+        new_click = None
 
-        while True: 
-            if lb.get_audio.is_mute():
-                if state:
+        while True:  
+            if lb.get_audio.is_mute(): 
+                if state: 
                     last_key = lb.last_key_pressed.get_last_key()
-                    if  click_detector.has_left_clicked():
-                        if click_detector.approximate_pause_click_in_monitor():
-                            if mode == 1:
-                                user.start_playback(limit=int(0.375*volumen), volumen=volumen)
-                            else:
-                                user.increase(limit=int(0.375 * volumen), volumen=volumen)
-                            state = False
-                    elif last_key not in ["left", "right"]:
-                        if mode == 1:
-                            user.start_playback(int(limit=0.375*volumen), volumen=volumen)
-                        else:
-                            user.increase(limit=int(0.375 * volumen), volumen=volumen) 
-                        state = False
+
+                    if new_click != click_detector.left_click_coordinates:
+                        new_click = click_detector.left_click_coordinates
+
+                        if click_detector.approximate_pause_click_in_monitor(): 
+                            state = play_mode(user, mode, min_v, volumen)
+
+                    elif last_key == "space":
+                        state = play_mode(user, mode, min_v, volumen)
             else:
                 if not state:
                     if mode == 1:
-                        user.pause_playback(volumen=volumen, limit= int(volumen*0.375))
+                        user.pause_playback(volumen=volumen, limit= int(volumen*min_v))
                     else:
-                        user.decrease(volumen=volumen, limit=int(volumen * 0.375))
+                        user.decrease(volumen=volumen, limit=int(volumen * min_v))
                     state = True
 
             time.sleep(0.25)
