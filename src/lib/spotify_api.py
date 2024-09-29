@@ -42,7 +42,7 @@ class User:
             "album_picture": playback_info["item"]["album"]["images"][0]["url"]
         }
 
-    def start_playback(self, playlist_id=None, step=9):
+    def start_playback(self, limit, volumen, playlist_id = None):
         """
         Plays a specific playlist if specified; otherwise, only Spotify is played.
 
@@ -52,32 +52,32 @@ class User:
 
         try:
             self.sp.start_playback(context_uri=f"spotify:playlist:{playlist_id}" if playlist_id else None)
-            self.unmute(step)
+            self.increase(limit, volumen)
         except:
             self.force_playback()
     
-    def pause_playback(self, step=-9):
-        self.mute(step)
+    def pause_playback(self, volumen, limit):
+        self.decrease(volumen, limit)
         self.sp.pause_playback()
     
-    def unmute(self, step):
+    def increase(self, limit, volumen, step=9):
         """
         Progressively increases the volume until it reaches the desired level.
 
         Args:
             step (int): The step value to increase the volume. For example, 3 will increase the volume by 3 units at each step.
         """
-        for i in range(35, 45, step):
+        for i in range(limit, volumen, step):
             self.sp.volume(i)
 
-    def mute(self, step):
+    def decrease(self, volumen, limit, step=-9):
         """
-        Progressively decreases the volume until muted.
+        Progressively decreases the volume until limit.
 
         Args:
             step (int): The negative step value to decrease the volume. For example, -3 will decrease the volume by 3 units at each step.
         """
-        for i in range(45, 0, step):
+        for i in range(volumen, limit, step):
             self.sp.volume(i)    
     
     def get_playlist(self):
