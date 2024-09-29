@@ -1,6 +1,7 @@
-# Spydio
+# Spydio (**sp**: <ins>sp</ins>otify, **py**: <ins>py</ins>thon, **dio**: au<ins>dio</ins>)
 
-Spydio is a tool designed to manage Spotify playback based on the audio state of other programs, such as a web browser. If the audio from the browser is paused or muted, Spydio can resume playback on Spotify, and vice versa.
+
+Spydio is a tool designed to manage Spotify playback based on the audio status of other applications, such as a web browser. If the browser's audio is paused or muted, Spydio will automatically resume playback on Spotify, eliminating the need to manually control it through the application. Likewise, when audio is resumed or sound is detected again in the browser, Spydio will automatically pause Spotify playback.
 
 ## Features
 
