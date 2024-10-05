@@ -55,8 +55,8 @@ You must set up your Spotify credentials so that Spydio can interact with your a
    - Open the `spotify_config.py` file in the project.
    - Replace the placeholder values with your credentials:
    ```python
-   SPOTIPY_CLIENT_ID='your_client_id'
-   SPOTIPY_CLIENT_SECRET='your_client_secret'
+   CLIENT_ID='your_client_id'
+   CLIENT_SECRET='your_client_secret'
 ### 4. Run the program
 Being in the program directory executes:
 ```bash
