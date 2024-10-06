@@ -48,8 +48,8 @@ You must set up your Spotify credentials so that Spydio can interact with your a
 
 3. Create a New Application:
    - In the dashboard, click on **"Create an App"**.
-   - Fill in the required fields (name, description) and agree to the terms.
-   - Once the application is created, you will see your **client_id** and **client_secret**.
+   - Fill in the required fields (name, description), set the "Redirect URI" to `http://localhost:8888/callback`, and agree to the terms.
+   - Once the application is created, you will find your **client_id** and **client_secret** in the application's **Settings**.
 
 4. Configure Spydio:
    - Open the `spotify_config.py` file in the project.
@@ -58,7 +58,11 @@ You must set up your Spotify credentials so that Spydio can interact with your a
    CLIENT_ID='your_client_id'
    CLIENT_SECRET='your_client_secret'
 ### 4. Run the program
-Being in the program directory executes:
+Before running the program, ensure you are inside the `src` folder of the repository. If you are not in the `src` folder, navigate to it using:
+```bash
+cd src
+```
+Then, execute:
 ```bash
 python main.py
 ```
