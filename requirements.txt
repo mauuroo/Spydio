@@ -1,10 +1,13 @@
 certifi==2024.8.30
 charset-normalizer==3.3.2
+comtypes==1.4.7
 customtkinter==5.2.2
 darkdetect==0.8.0
 idna==3.10
+keyboard==0.13.5
 packaging==24.1
 psutil==6.0.0
+pycaw==20240210
 pynput==1.7.7
 PyQt5==5.15.11
 PyQt5-Qt5==5.15.2
