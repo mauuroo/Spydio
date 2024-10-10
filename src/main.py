@@ -18,11 +18,11 @@ def is_spotify_running():
             return True
     return False
 
-def play_mode(user, mode, min_v, volumen):
+def play_mode(user, mode, limit, volumen):
     if mode == 1:
-        user.start_playback(limit=int(min_v*volumen), volumen=volumen)
+        user.start_playback(limit=limit, volumen=volumen)
     else:
-        user.increase(limit=int(min_v * volumen), volumen=volumen) 
+        user.increase(limit=limit, volumen=volumen) 
     return False
 
 
@@ -30,7 +30,6 @@ def play_mode(user, mode, min_v, volumen):
 def main():
     user = lb.User(client_id=lb.CLIENT_ID, client_secret=lb.CLIENT_SECRET, redirect_uri=lb.REDIRECT_URI, scope=lb.SCOPE)
     state = True
-    min_v = 0.435
 
     #Makes sure to have spotify open for the correct execution of the program
     if not is_spotify_running():
@@ -42,11 +41,11 @@ def main():
                      "2) Disminución del volumen \n"))
     
     volumen = int(input("Ingrese Nivel de Volumen [0 - 100]: "))
+    limit = user.volumen_calibrate(volumen, mode)
     
     try:
         click_detector = lb.on_click_allowed.ClickDetector()
         click_detector.select_monitor()
-        user.start_playback() 
         new_click = None
 
         while True:  
@@ -58,16 +57,16 @@ def main():
                         new_click = click_detector.left_click_coordinates
 
                         if click_detector.approximate_pause_click_in_monitor(): 
-                            state = play_mode(user, mode, min_v, volumen)
+                            state = play_mode(user, mode, limit, volumen)
 
                     elif last_key == "space":
-                        state = play_mode(user, mode, min_v, volumen)
+                        state = play_mode(user, mode, limit, volumen)
             else:
                 if not state:
                     if mode == 1:
-                        user.pause_playback(volumen=volumen, limit= int(volumen*min_v))
+                        user.pause_playback(volumen=volumen, limit=limit)
                     else:
-                        user.decrease(volumen=volumen, limit=int(volumen * min_v))
+                        user.decrease(volumen=volumen, limit=limit)
                     state = True
 
             time.sleep(0.25)

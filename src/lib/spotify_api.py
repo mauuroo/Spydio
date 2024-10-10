@@ -60,25 +60,52 @@ class User:
         self.decrease(volumen, limit)
         self.sp.pause_playback()
     
-    def increase(self, limit, volumen, step=17):
+    def increase(self, limit, volumen):
         """
         Progressively increases the volume until it reaches the desired level.
 
         Args:
             step (int): The step value to increase the volume. For example, 3 will increase the volume by 3 units at each step.
         """
-        for i in range(limit, volumen, step):
+        for i in range(limit, volumen, int(volumen*0.15)):
             self.sp.volume(i)
+        self.sp.volume(i + int(volumen*0.15))
 
-    def decrease(self, volumen, limit, step=-17):
+    def decrease(self, volumen, limit):
         """
         Progressively decreases the volume until limit.
 
         Args:
             step (int): The negative step value to decrease the volume. For example, -3 will decrease the volume by 3 units at each step.
         """
-        for i in range(volumen, limit, step):
-            self.sp.volume(i)    
+        for i in range(volumen, limit, -int(volumen*0.15)):
+            self.sp.volume(i)
+        self.sp.volume(i - int(volumen*0.15))
+    
+    def volumen_calibrate(self, volumen, mode):
+        """
+        Calibrates the volume of the Spotify playback.
+        This function adjusts the volume of the Spotify playback in a decreasing manner
+        from the specified volume to 30% of that volume. It also optionally pauses the
+        playback based on the mode provided.
+        Args:
+            volumen (int): The initial volume level to set.
+            mode (int): The mode of operation. If mode is 1, the playback will be paused
+                        after volume calibration.
+        Returns:
+            int: The final volume level after calibration.
+        """
+        
+        print("Calibrando el volumen...")	
+        self.force_playback()
+        self.sp.volume(volumen)
+        for i in range(volumen, int(volumen*0.3), -int(volumen*0.15)):
+            pass
+        
+        self.sp.volume(i)
+        if mode == 1:
+            self.sp.pause_playback()
+        return i
     
     def get_playlist(self):
         """
