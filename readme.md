@@ -33,6 +33,7 @@ Spydio requires your Spotify credentials to interact with your account. Follow t
 2. **Create an Application**:
    - Navigate to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications).
    - Click **"Create an App"**, provide the necessary details, and set the "Redirect URI" to `http://localhost:8888/callback`.
+   - Mark the **"Web API"** option.
    - Copy the **Client ID** and **Client Secret** from your app's settings.
 
 3. **Configure Spydio**:
