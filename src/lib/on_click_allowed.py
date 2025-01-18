@@ -1,5 +1,5 @@
 from pynput import mouse
-from PyQt5.QtWidgets import QApplication
+from screeninfo import get_monitors
 
 class ClickDetector:
     """
@@ -53,44 +53,26 @@ class ClickDetector:
         Returns:
             list: A list of dictionaries containing information about each monitor.
         """
-        app = QApplication([])
-        monitors = []
-        for screen in app.screens():
-            geometry = screen.geometry()
+        monitors = list()
+        for monitor in get_monitors():
             monitors.append({
-                'name': screen.name(),
-                'width': geometry.width(),
-                'height': geometry.height(),
-                'x': geometry.left(),
-                'y': geometry.top(),
-                'right': geometry.right(),
-                'bottom': geometry.bottom(),
-                'is_primary': screen == app.primaryScreen(),
+                'name': monitor.name,
+                'width': monitor.width,
+                'height': monitor.height,
+                'x': monitor.x,
+                'y': monitor.y,
+                'right': monitor.x + monitor.width -1,
+                'bottom': monitor.y + monitor.height - 1,
+                'is_primary': monitor.is_primary,
             })
-        QApplication.quit()
-        for i, monitor in enumerate(monitors):
-            print(f"{i+1})Monitor: {monitor}")
         return monitors
 
-    def select_monitor(self):
+    def select_monitor(self, selected_monitor):
         """
-        Selects a monitor based on its index in the list of monitors.
-
-        Args:
-            index (int): The index of the monitor to select.
+        Selects a monitor .
         """
         monitors = self.get_info_monitors()
-        flag = False
-
-        while not flag:
-            index = 0 if len(monitors) == 1 else int(input("Select a monitor: ")) - 1
-
-            if 0 <= index < len(monitors):
-                self.selected_monitor = monitors[index]
-                print(f"Selected Monitor {index}: {self.selected_monitor}")
-                flag = True
-            else:
-                print(f"Invalid monitor index: {index}")
+        self.selected_monitor = next((monitor for monitor in monitors if monitor["name"] == selected_monitor), None)
 
     def is_click_in_selected_monitor(self):
         """
