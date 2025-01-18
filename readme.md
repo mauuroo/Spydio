@@ -1,72 +1,82 @@
 # Spydio (**sp**: <ins>sp</ins>otify, **py**: <ins>py</ins>thon, **dio**: au<ins>dio</ins>)
 
-Spydio is a tool designed to manage Spotify playback based on the audio status of other applications, such as a web browser. If the browser's audio is paused or muted, Spydio will automatically resume playback on Spotify, eliminating the need to manually control it through the application. Likewise, when audio is resumed or sound is detected again in the browser, Spydio will automatically pause Spotify playback.
+Spydio is a tool designed to seamlessly manage Spotify playback based on the audio status of your web browser. It now features a user-friendly graphical interface, eliminating the need for console interactions and making it easier than ever to enjoy uninterrupted music.
+
+![Main Configuration Window](src/assets/gui_spydio.png)
 
 ## Features
 
-- Detects if the browser is playing audio.
+- Automatically detects if the browser is playing or muted.
 - Pauses or resumes Spotify playback based on the browser's audio state.
-- Allows monitor configuration and detection of clicks in specific areas.
-- Compatible with multiple browsers and monitors.
+- Easy-to-use graphical interface for setup and controls.
+- Multi-monitor support with click detection to ensure browser audio state is accurately tracked.
+- Configurable playback modes and settings for a personalized experience.
+- Runs efficiently in the background.
 
-## Requirements
+## Installation
 
-- Python 3.12 or higher
-- Python libraries:
-  - `spotipy` for interacting with the Spotify API.
-  - `pynput` for detecting keyboard and mouse clicks.
-  - `PyQt5` for monitor detection and handling.
-  - `customtkinter` for the graphical user interface.
+Spydio is distributed as an installer for Windows, making the setup process straightforward and hassle-free.
 
-## Tutorial
-> **Note:** The graphical interface for Spydio will not be available until January 2025. Therefore, all interactions with the program must be done through the console.
+### 1. Download and Install
 
+1. Download the latest Spydio installer from the [Releases](https://github.com/mauuroo/Spydio/releases) section on GitHub.
+2. Run the installer (`SpydioSetup.exe`) and follow the on-screen instructions.
+3. Once installed, launch Spydio from the Start Menu or Desktop shortcut.
 
-### 1. Cloning the Repository
-To get started, clone the repository to your local machine. You can do this by running the following command:
+### 2. Spotify Account Configuration
 
-```bash
-git clone https://github.com/mauuroo/Spydio.git
-```
-### 2. Installing Dependencies
-Navigate into the project directory:
-```bash
-cd Spydio
-```
-Install the required dependencies. You can do this using:
-```bash
-pip install -r requirements.txt
-```
-### 3. Spotify Account Configuration
-You must set up your Spotify credentials so that Spydio can interact with your account. Follow these steps:
+Spydio requires your Spotify credentials to interact with your account. Follow these steps to set up:
 
-1. Log in to your Spotify account:
-   - Go to the [Spotify for Developers](https://developer.spotify.com) page and log in.
+1. **Log in to your Spotify account**:
+   - Visit the [Spotify for Developers](https://developer.spotify.com) website.
 
-2. Access the Dashboard:
-   - Once logged in, click on "Dashboard" at the top of the page or go directly to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications).
+2. **Create an Application**:
+   - Navigate to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications).
+   - Click **"Create an App"**, provide the necessary details, and set the "Redirect URI" to `http://localhost:8888/callback`.
+   - Copy the **Client ID** and **Client Secret** from your app's settings.
 
-3. Create a New Application:
-   - In the dashboard, click on **"Create an App"**.
-   - Fill in the required fields (name, description), set the "Redirect URI" to `http://localhost:8888/callback`, and agree to the terms.
-   - Once the application is created, you will find your **client_id** and **client_secret** in the application's **Settings**.
+3. **Configure Spydio**:
+   - When opening Spydio for the first time, a window will appear where you will need to enter your Client ID and Client Secret in the designated fields.
+   - After entering the credentials, click "Save".
+   
+   > **Note:** When entering credentials for the first time or if they are invalid, temporary URLs will open in your browser for verification purposes. This behavior is normal and ensures proper authentication with Spotify.
 
-4. Configure Spydio:
-   - Open the `spotify_config.py` file in the project.
-   - Replace the placeholder values with your credentials:
-   ```python
-   CLIENT_ID='your_client_id'
-   CLIENT_SECRET='your_client_secret'
-### 4. Run the program
-Before running the program, ensure you are inside the `src` folder of the repository. If you are not in the `src` folder, navigate to it using:
-```bash
-cd src
-```
-Then, execute:
-```bash
-python main.py
-```
-When running, the program will ask for certain information through the console before starting. Once set up, it will run in the background, pausing and resuming your Spotify playback based on browser activity.
+## How to Use
+
+Spydio provides a customizable interface with the following settings:
+
+### Main Configurations
+
+1. **Mode**:
+   - Choose between:
+     - **Play/Pause**: Controls playback based on browser audio state.
+     - **Volume Increase / Volume Decrease**: Gradually increases the audio when the browser is muted and decreases it without pausing when the navigator is playing.
+2. **Monitor**:
+   - Select the monitor where you will play multimedia content.
+   - Assign the monitor Spydio will monitor to analyze playback data.
+
+3. **Playback Style**:
+   - **Select Playlist**: Requires a playlist URL to play specific playlists.
+   - **Play Mode**: Plays Spotify using your last queue.
+
+4. **Playlist ID**:
+   - Enter the Spotify URL for the playlist you want to play (only applicable if **Playback Style** is set to "Select Playlist").
+
+5. **Credentials**
+   - In the upper middle part of the window, you’ll find a switch that allows you to change your **Client ID** and **Client Secret** if needed. Toggle it to update your credentials.
+### General Steps
+
+1. Launch Spydio and configure the settings according to your preferences.
+2. Open your web browser and start streaming audio.
+3. Spydio will manage Spotify playback based on your selected mode and browser activity:
+   - **When browser audio is paused/muted**: Spotify playback will resume (or volume will increase).
+   - **When browser audio is active**: Spotify playback will pause (or volume will decrease).
+
+## Support
+
+If you encounter issues or have suggestions, please:
+- Open an issue on the [GitHub Issues](https://github.com/mauuroo/Spydio/issues) page.
+- Or email: **mfernandezar@usm.cl**.
 
 ## License
 
