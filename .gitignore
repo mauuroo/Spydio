@@ -4,3 +4,7 @@ Thumbs.db
 .cache
 __pycache__
 env/
+build/
+dist/
+main.spec
+SpydioSetup.exe
