@@ -2,14 +2,12 @@ import os
 import json
 import sys
 
-# Define la ruta donde se guardarán las credenciales
 def get_credentials_path():
-    if getattr(sys, 'frozen', False):  # Si la aplicación está empaquetada
+    if getattr(sys, 'frozen', False):
         return os.path.join(os.getenv('APPDATA'), 'Spydio', 'credentials.json')
-    else:  # Durante el desarrollo
+    else:
         return os.path.join(os.getcwd(), 'credentials.json')
 
-# Cargar las credenciales desde el archivo
 def load_credentials():
     credentials_path = get_credentials_path()
     if os.path.exists(credentials_path):
@@ -17,7 +15,6 @@ def load_credentials():
             return json.load(file)
     return None
 
-# Guardar las credenciales en el archivo
 def save_credentials(client_id, client_secret):
     credentials_path = get_credentials_path()
     os.makedirs(os.path.dirname(credentials_path), exist_ok=True)
@@ -32,7 +29,7 @@ else:
     CLIENT_ID = ''
     CLIENT_SECRET = ''
 
-REDIRECT_URI = 'http://localhost:8888/callback'
+REDIRECT_URI = 'http://127.0.0.1:8888/callback'
 SCOPE = (
         'user-read-playback-state '
         'user-modify-playback-state '
