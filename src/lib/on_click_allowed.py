@@ -72,7 +72,7 @@ class ClickDetector:
         Selects a monitor .
         """
         monitors = self.get_info_monitors()
-        self.selected_monitor = next((monitor for monitor in monitors if monitor["name"] == selected_monitor), None)
+        self.selected_monitor = next((monitor for monitor in monitors if f"{monitor['name']} | {monitor['width']}x{monitor['height']} | Primary: {monitor['is_primary']}" == selected_monitor), None)
 
     def is_click_in_selected_monitor(self):
         """

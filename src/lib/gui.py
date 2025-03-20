@@ -266,7 +266,7 @@ class ConfigurationScreen(customtkinter.CTk):
         self.title("Credentials")
         self.geometry("300x410")
         self.resizable(False, False)
-        self.iconbitmap(os.path.join(sys._MEIPASS, 'src','assets', 'spydio_icon.ico') if getattr(sys, 'frozen', False) else "src/assets/spydio.ico")
+        self.iconbitmap(os.path.join(sys._MEIPASS, 'src','assets', 'spydio_icon.ico') if getattr(sys, 'frozen', False) else "src/assets/spydio_icon.ico")
 
         self.client_id = ""
         self.client_secret = ""
