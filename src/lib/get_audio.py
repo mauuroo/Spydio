@@ -12,7 +12,6 @@ def is_mute(browser_names=(
             if process_name in (name.lower() for name in browser_names):
                 meter_info = session._ctl.QueryInterface(IAudioMeterInformation)
                 peak = meter_info.GetPeakValue()
-                print(f"Process: {process_name}, Volume: {peak}")
                 if peak == 0:
                     return True
     return False
