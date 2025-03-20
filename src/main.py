@@ -20,11 +20,13 @@ def is_spotify_running():
     return False
 
 def play_mode(user, mode, volumen, playlist):
-    if mode == 1:
-        user.start_playback(volumen=volumen, playlist_id=playlist)
-    else:
-        user.increase(volumen=volumen, pct=0.44, cof=4)
-    return False
+
+        if mode == 1:
+            if not user.sp.current_playback()["is_playing"]:
+                user.start_playback(volumen=volumen, playlist_id=playlist)
+        else:
+            user.increase(volumen=volumen, pct=0.44, cof=4)
+        return False
 
 def main():
     """
@@ -44,7 +46,8 @@ def main():
     def start_main_program(client_id, client_secret):
         user = lb.User(client_id=client_id, client_secret=client_secret, redirect_uri=lb.REDIRECT_URI, scope=lb.SCOPE, on_valid_credentials_callback=start_main_program)
         user.force_playback()
-        monitors = [monitor["name"] for monitor in  lb.on_click_allowed.ClickDetector.get_info_monitors()]
+        monitors = list()
+        monitors = [f"{monitor['name']} | {monitor['width']}x{monitor['height']} | Primary: {monitor['is_primary']}" for monitor in  lb.on_click_allowed.ClickDetector.get_info_monitors()]
 
         gui = lb.App(user=user, monitors=monitors, change_window=start_main_program)
         update_thread = threading.Thread(target=main_logic, args= (user, gui,), daemon=True)
@@ -88,7 +91,8 @@ def main_logic(user, gui):
             context_uri = None
 
             if gui.frame.mode == 2:
-                user.start_playback(volumen=int(volumen * 0.44), playlist_id=gui.frame.get_playlist(context_uri=context_uri))
+                if not user.sp.current_playback()["is_playing"]:
+                    user.start_playback(volumen=int(volumen * 0.44), playlist_id=gui.frame.get_playlist(context_uri=context_uri))
             
             try:
                 click_detector = lb.on_click_allowed.ClickDetector()
