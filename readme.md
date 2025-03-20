@@ -32,7 +32,7 @@ Spydio requires your Spotify credentials to interact with your account. Follow t
 
 2. **Create an Application**:
    - Navigate to the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications).
-   - Click **"Create an App"**, provide the necessary details, and set the "Redirect URI" to `http://localhost:8888/callback`.
+   - Click **"Create an App"**, provide the necessary details, and set the "Redirect URI" to `http://127.0.0.1:8888/callback`.
    - Mark the **"Web API"** option.
    - Copy the **Client ID** and **Client Secret** from your app's settings.
 
@@ -55,6 +55,7 @@ Spydio provides a customizable interface with the following settings:
 2. **Monitor**:
    - Select the monitor where you will play multimedia content.
    - Assign the monitor Spydio will monitor to analyze playback data.
+   - **To change the monitor**, you must first stop the program using the "Stop" button and then restart it after selecting the new monitor
 
 3. **Playback Style**:
    - **Select Playlist**: Requires a playlist URL to play specific playlists.
