@@ -1,3 +1,8 @@
+> 📌 **Upcoming Update – Version 3.0 Coming in July**  
+> Spydio 3.0 is on the way with a **refined user experience**, **improved performance**, and a **new installer**.  
+> I'm transitioning away from Inno Setup due to false virus detections by some browsers.  
+> The new version will use a more robust and trusted alternative (likely **NSIS** or **WiX Toolset**) for a smoother and safer installation process.
+
 # Spydio (**sp**: <ins>sp</ins>otify, **py**: <ins>py</ins>thon, **dio**: au<ins>dio</ins>)
 
 Spydio is a tool designed to seamlessly manage Spotify playback based on the audio status of your web browser. It now features a user-friendly graphical interface, eliminating the need for console interactions and making it easier than ever to enjoy uninterrupted music.
