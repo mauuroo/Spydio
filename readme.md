@@ -1,4 +1,4 @@
-> 📌 **Upcoming Update – Version 3.0 Coming in January**  
+> 📌 **Upcoming Update – Version 3.0 Coming**  
 > Spydio 3.0 is on the way with a **refined user experience**, **improved performance**, and a **new installer**.  
 > I'm transitioning away from Inno Setup due to false virus detections by some browsers.  
 > The new version will use a more robust and trusted alternative (likely **NSIS** or **WiX Toolset**) for a smoother and safer installation process.
